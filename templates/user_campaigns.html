@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }} - Campaigns</title>
+</head>
+<body>
+    <h1>{{ user.username }} - Campaigns</h1>
+    <ul>
+        {% for campaign in campaigns %}
+            <li>{{ campaign.name }} - <a href="{{ url_for('add_work_report', campaign_id=campaign.id) }}">Add Work Report</a></li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ url_for('add_campaign', user_id=user.id) }}" method="post">
+        <label for="campaign_name">Nazwa kampanii:</label>
+        <input type="text" name="campaign_name" required>
+        <button type="submit">Dodaj kampanie</button>
+    </form>
+</body>
+</html>
