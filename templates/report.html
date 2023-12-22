@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mt-5 text-primary">Raport</h1>
+
+    <!-- Tabela użytkowników -->
+    <table class="table mt-4 report-table table-dark-mode">
+        <thead>
+            <tr>
+                <th>Login</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Liczba kampanii</th>
+                <th>Całkowity czas pracy</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <!-- Dzielimy dla czytelnosci, najpierw uzytkownik -->
+                <tr class="font-weight-bold">
+                    <td>{{ user.username_and_id }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.campaigns|length }}</td>  <!-- Liczba kampanii -->
+                    <td>{{ user.campaigns|sum(attribute='total_work_time') }}</td>  <!-- Całkowity czas pracy -->
+                </tr>
+
+                <!-- Pusty wiersz, zeby nie bylo balaganu-->
+                <tr>
+                    <td colspan="5"></td>
+                </tr>
+
+                <!-- Lista kampanii użytkownika -->
+                {% for campaign in user.campaigns %}
+                    <tr>
+                        <td colspan="2">{{ campaign.name }}</td>
+                        <td colspan="3">{{ campaign.total_work_time }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

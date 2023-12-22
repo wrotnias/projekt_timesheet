@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.username }} - Campaigns</title>
-</head>
-<body>
-    <h1>{{ user.username }} - Campaigns</h1>
-    <ul>
+<!-- Jednak nie uzywamy-->
+<!-- 
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mt-5">{{ user.username }} - Campaigns</h1>
+    <ul class="list-group mt-4">
         {% for campaign in campaigns %}
-            <li>{{ campaign.name }} - <a href="{{ url_for('add_work_report', campaign_id=campaign.id) }}">Add Work Report</a></li>
+            <li class="list-group-item">{{ campaign.name }} - <a href="{{ url_for('add_work_report', campaign_id=campaign.id) }}">Add Work Report</a></li>
         {% endfor %}
     </ul>
 
-    <form action="{{ url_for('add_campaign', user_id=user.id) }}" method="post">
-        <label for="campaign_name">Nazwa kampanii:</label>
-        <input type="text" name="campaign_name" required>
-        <button type="submit">Dodaj kampanie</button>
+    <form action="{{ url_for('add_campaign', user_id=user.id) }}" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="campaign_name">Nazwa kampanii:</label>
+            <input type="text" name="campaign_name" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj kampanie</button>
     </form>
-</body>
-</html>
+{% endblock %}
+-->

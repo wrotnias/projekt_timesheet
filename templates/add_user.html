@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mt-5 text-primary">Dodaj użytkownika</h1>
+    <form action="{{ url_for('add_user_page') }}" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="first_name">Imię:</label>
+            <input type="text" name="first_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Nazwisko:</label>
+            <input type="text" name="last_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="pesel">PESEL:</label>
+            <input type="text" name="pesel" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="service_line">Service Line:</label>
+            <select name="service_line" class="form-control" required>
+                <option value="Client Service">Client Service</option>
+                <option value="IT">IT</option>
+                <option value="Back Office">Back Office</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj użytkownika</button>
+    </form>
+
+    <!-- Tabela użytkowników -->
+    <form action="{{ url_for('update_users') }}" method="post">
+        <table class="table mt-4 report-table table-dark-mode">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>PESEL</th>
+                    <th>Service Line</th>
+                    <th>Przełożony</th>
+                    <th>Login</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.pesel }}</td>
+                        <td>
+                            <select name="service_line_{{ user.id }}" class="form-control">
+                                <option value="Client Service" {% if user.service_line == 'Client Service' %} selected {% endif %}>Client Service</option>
+                                <option value="IT" {% if user.service_line == 'IT' %} selected {% endif %}>IT</option>
+                                <option value="Back Office" {% if user.service_line == 'Back Office' %} selected {% endif %}>Back Office</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="supervisor_{{ user.id }}" class="form-control">
+                                {% for supervisor in users %}
+                                    <option value="{{ supervisor.id }}" {% if user.supervisor and user.supervisor.id == supervisor.id %} selected {% endif %}>{{ supervisor.first_name }} {{ supervisor.last_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>{{ user.username_and_id }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Zatwierdź zmiany</button>
+    </form>
+{% endblock %}

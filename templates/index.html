@@ -1,40 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="mt-5">Timesheet</h1>
+    <h1 class="mt-5 text-primary">Timesheet</h1>
 
-    <!-- Formularz do dodawania użytkownika -->
-    <form action="{{ url_for('add_user') }}" method="post" class="mt-4">
-        <div class="form-group">
-            <label for="first_name">Imię:</label>
-            <input type="text" name="first_name" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="last_name">Nazwisko:</label>
-            <input type="text" name="last_name" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Dodaj</button>
-    </form>
-
-    <!-- Lista użytkowników -->
-    <table class="table mt-4">
+<!-- Lista kampanii -->
+<form action="{{ url_for('index') }}" method="post">
+    <table class="table mt-4 table-dark-mode" id="campaignTable">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Imię</th>
-                <th>Nazwisko</th>
-                <th>Login</th>
+                <th>Nazwa</th>
+                <th>Data rozpoczęcia</th>
+                <th>Data zakończenia</th>
+                <th>Wprowadź czas pracy (hh:mm)</th>
+                <th>Całkowity czas pracy</th>
+                <th>Usuń kampanię</th> 
             </tr>
         </thead>
         <tbody>
-            {% for user in users %}
+            {% for campaign in campaigns %}
                 <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.first_name }}</td>
-                    <td>{{ user.last_name }}</td>
-                    <td>{{ user.username_and_id }}</td>
+                    <td>{{ campaign.id }}</td>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.start_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ campaign.end_date.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <input type="text" name="work_time_{{ campaign.id }}">
+                        <input type="submit" value="Dodaj czas pracy">
+                    </td>
+                    <td>{{ campaign.total_work_time }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_campaign', campaign_id=campaign.id) }}" class="delete-button">Usuń</a> <!--W sumie to się przyda-->
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+</form>
+
 {% endblock %}

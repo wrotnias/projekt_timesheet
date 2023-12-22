@@ -1,0 +1,105 @@
+/* Styl dla trybu ciemnego */
+body.dark-mode {
+    background-color: #303030;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Navbar */
+.navbar.dark-mode {
+    background-color: #424242;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Odsunięcie tytułu od skraju strony */
+.navbar-brand {
+    margin-left: 20px; /* Margines, bo bylo brzydko  */
+}
+
+/* Styl dla paska statusu trybu ciemnego */
+.navbar-dark .navbar-toggler-icon {
+    background-color: #ffffff;
+}
+
+/* Kolor tekstu na przycisku przełącznika w trybie ciemnym */
+.form-check-input.dark-mode {
+    background-color: #424242;
+    border-color: #424242;
+    color: #ffffff;
+    
+}
+
+.form-check-label.dark-mode {
+    color: #ffffff;
+}
+
+/* PRZYCISKI */
+/* Dodajemy przyciski "Dodaj czas pracy" i "Usuń" */
+body.dark-mode input[type="submit"],
+body:not(.dark-mode) input[type="submit"],
+body.dark-mode a.delete-button,
+body:not(.dark-mode) a.delete-button {
+    background-color: #424242; 
+    border-color: #424242;
+    color: #ffffff; 
+    border-radius: 5px; 
+    padding: 5px 10px;
+    cursor: pointer;
+}
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="number"],
+body.dark-mode input[type="tel"],
+body.dark-mode input[type="url"],
+body.dark-mode input[type="search"],
+body.dark-mode textarea,
+body.dark-mode select {
+    color: #fff !important; /* Nadpisujemy bootstrapa, stad wszedzie nizej !important */
+    background-color: #424242 !important; 
+}
+
+/* Żeby pola wejściowe byly w trybie ciemnym */
+body.dark-mode .dark-mode-input {
+    color: #ffffff !important; 
+    background-color: #424242 !important; 
+    border-color: #424242 !important;
+}
+/* TABELE */
+/* Styl dla tabeli na wszystkich stronach */
+body.dark-mode .table,
+body:not(.dark-mode) .table {
+    background-color: #424242 !important;
+    color: #fff !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lekki cień, zeby nie było płasko */
+}
+
+/* Styl dla tabeli na stronie raportu i dodawania użytkownika, bo cos nie dziala */
+body:not(.dark-mode) .table.report-table {
+    background-color: #f8f9fa !important;
+    color: #424242 !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+body.dark-mode .table.report-table {
+    background-color: #424242 !important;
+    color: #fff !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Zaokrąglone rogi dla wszystkich tabel - nie chce działać */
+.table {
+    border-radius: 10px !important;
+}
+
+/* Zaokrąglone rogi dla tabel w trybie ciemnym */
+body.dark-mode .table,
+body:not(.dark-mode) .table {
+    border-radius: 10px !important;
+}
+
+/* Zaokrąglone rogi dla tabeli na stronie raportu i dodawania użytkownika */
+body:not(.dark-mode) .table.report-table,
+body.dark-mode .table.report-table {
+    border-radius: 10px !important;
+}

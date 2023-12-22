@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mt-5 text-primary">Dodaj kampanię</h1>
+    <form action="{{ url_for('add_campaign_page', user_id=user.id) }}" method="post" class="mt-4">
+        <div class="mb-3">
+            <label for="campaign_name" class="form-label text-secondary">Nazwa kampanii:</label>
+            <input type="text" name="campaign_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="start_date" class="form-label text-secondary">Data rozpoczęcia:</label>
+            <input type="date" name="start_date" class="form-control dark-mode-input" required>
+        </div>
+        <div class="mb-3">
+            <label for="end_date" class="form-label text-secondary">Data zakończenia:</label>
+            <input type="date" name="end_date" class="form-control dark-mode-input" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj kampanię</button>
+    </form>
+{% endblock %}
