@@ -114,7 +114,7 @@ def index():
                     # Wprowadzony czas zawiera tylko godziny
                     hours = int(work_time)
                     minutes = 0
-                total_hours = hours + minutes / 60  # Przelicza minuty na godziny - wczesniej przy wprowadzeniu np. 6 traktowalo to jako 6 minut, chcemy zeby to bylo 6 godzin
+                total_hours = hours + minutes / 60  
                 campaign.total_work_time += total_hours  # Aktualizuje total_work_time w bazie danych
                 db.session.commit()
 
