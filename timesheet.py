@@ -67,7 +67,7 @@ with app.app_context():
     # Tworzenie admina aby sie zalogowac 
     existing_admin = User.query.filter_by(username_and_id='admin').first()
     if not existing_admin:
-        new_user = User(first_name='Admin', last_name='Admin', pesel='12345678902', service_line='IT', username_and_id='admin', supervisor_id='admin', password=generate_password_hash('admin'))
+        new_user = User(first_name='Admin', last_name='Admin', pesel='12345678902', service_line='IT', username_and_id='admin', supervisor_id='admin', password=bcrypt.generate_password_hash('admin').decode('utf-8'))
         db.session.add(new_user)
         db.session.commit()
 
@@ -82,7 +82,7 @@ def login():
 
         user = User.query.filter_by(username_and_id=username).first()
 
-        if user and check_password_hash(user.password, password):
+        if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('index'))
         else:
@@ -128,23 +128,25 @@ def add_user_page():
     if request.method == 'POST':
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
-        pesel = request.form.get('pesel')  
-        service_line = request.form.get('service_line') 
-        password = request.form.get('password') 
-        supervisor_id = request.form.get('supervisor') 
+        pesel = request.form.get('pesel')
+        service_line = request.form.get('service_line')
+        password = request.form.get('password')
+        supervisor_id = request.form.get('supervisor')
 
         if first_name and last_name and pesel and service_line and password:
             with app.app_context():
-                # Tworzy unikalne usernameAndID, uzywane jako login
+                # Tworzy unikalne usernameAndID, używane jako login
                 username_and_id = f"{first_name}{last_name}{User.query.count() + 1}"
-                new_user = User(first_name=first_name, last_name=last_name, pesel=pesel, service_line=service_line, supervisor_id=supervisor_id, password=generate_password_hash(password), username_and_id=username_and_id)  # Uaktualnionee
+                # Używamy bcrypt do generowania hashu hasła
+                hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+                new_user = User(first_name=first_name, last_name=last_name, pesel=pesel, service_line=service_line, supervisor_id=supervisor_id, password=hashed_password, username_and_id=username_and_id)
                 db.session.add(new_user)
                 db.session.commit()
         return redirect(url_for('index'))
     else:
         # Pobiera wszystkich użytkowników
         users = User.query.all()
-        # Przekazuje użytkowników do szablonu z wszystkimi aktywnymi uzytkownikami
+        # Przekazuje użytkowników do szablonu z wszystkimi aktywnymi użytkownikami
         return render_template('add_user.html', users=users)
 
 #Aktualizacja uzytkownika
@@ -239,4 +241,4 @@ def report():
     return render_template('report.html', users=users)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

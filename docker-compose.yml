@@ -1,0 +1,11 @@
+version: latest
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/app
+    environment:
+      - SECRET_KEY=your_secret_key
+      - DATABASE_URL=sqlite:///site.db
